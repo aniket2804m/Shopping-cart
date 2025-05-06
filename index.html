@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+
+  <body ng-app="myapp" ng-controller="CartForm">
+    <center>
+      <h2>Shopping Cart Record</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Cost</th>
+            <th>Total</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in cart.items track by $index">
+            <td><input type="text" ng-model="item.description" required /></td>
+            <td>
+              <input type="number" ng-model="item.qty" min="1" required />
+            </td>
+            <td>
+              <input
+                type="number"
+                ng-model="item.cost"
+                min="0.01"
+                step="0.01"
+                required
+              />
+            </td>
+            <td>{{ item.qty * item.cost | currency:'Rs ' }}</td>
+            <td>
+              <button class="btn btn-remove" ng-click="removeItem($index)">
+                X
+              </button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <button class="btn btn-add" ng-click="addItem()">Add Item</button>
+            </td>
+            <td colspan="2"></td>
+            <td><strong>Total</strong></td>
+            <td><strong>{{ total() | currency:'Rs ' }}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button class="btn btn-clear" ng-click="clearCart()">Clear Cart</button>
+    </center>
+
+   <script src="script.js"></script>
+  </body>
+</html>
